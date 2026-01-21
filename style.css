@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --full-background-light: hsl(221, 84%, 84%);
+    --full-background: hsl(221, 84%, 64%);
+    --full-background-dark: hsl(221, 84%, 44%);
+    --card-background: hsl(0, 0%, 100%);
+    --card-shadow: hsl(0, 0%, 0%);
+    --submit-button: rgb(87, 117, 240);
+    --error: red;
+    --success: green;
+    --orange-50: hsl(39, 100%, 50%);
+    --orange-65: hsl(39, 100%, 65%);
+    --orange-80: hsl(39, 100%, 80%);
+}
+
+body {
+    font-family: "Overpass", sans-serif;
+    /* background-image: linear-gradient(to top left, var(--full-background-light), var(--full-background), var(--full-background-dark)); */
+    /* background-color: var(--full-background); */
+    display: grid;
+    grid-template-columns: 10% 1fr 10%;
+    grid-template-rows: 10% 1fr 10%;
+
+    grid-template-areas:
+        ". searchBox ."
+        ". userCards ."
+        ". . .";
+    height: 100vh;
+}
+
+#searchBox{
+    grid-area: searchBox;
+
+}
+
+.userCards {
+    grid-area: userCards;
+    height: 100hv;
+    display:flex;
+    flex-wrap: wrap;
+
+}
+
+.userCard{
+    border: 1px solid black;
+    background-image: linear-gradient(to top left, var(--orange-80), var(--orange-65), var(--orange-50));
+    border-radius: 1em;
+    word-wrap: break-word;
+    min-width: 5em;
+    max-width: 15em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
