@@ -1,24 +1,27 @@
 let userList = null;
-const searchBoxHtml = document.getElementById("searchBox");
-searchBoxHtml.addEventListener('input', (event) => { pp(event); });
+const userCardsHtml = document.getElementById("userCards");
 
-function pp(event) {
+const searchBoxHtml = document.getElementById("searchBox");
+searchBoxHtml.addEventListener('input', (event) => { search(event); });
+
+function search(event) {
     let nameToSearch = event.target.value;
 
     if (nameToSearch.trim() == "") {
-        f1();
+        main();
         return null;
     }
 
     let result = searchUserName(nameToSearch);
 
-    // let card = null;
-    // if(result!=null){
-    //     card = createUserDetailCard(result)
-    // }else{
-    //     card = "User not found";
-    // }
-    displayUsers([result]);
+    let card = null;
+    if (result != null) {
+        card = createUserDetailCard(result);
+        resetUserCardsWindow();
+        displayUserCard(card);
+    } else {
+        userNotFound();
+    }
 }
 
 function searchUserName(nameToSearch) {
@@ -59,31 +62,43 @@ async function fetchUserList() {
     }
 }
 
-async function displayUsers(userList) {
-    console.log("displayUsers --START");
+async function displayUserCards(userDetailCards) {
 
     try {
-        const userCardsHtml = document.querySelector(".userCards");
-        userCardsHtml.innerHTML = "";
+        resetUserCardsWindow();
 
-        let userListCards = userList.map((element) => createUserDetailCard(element));
-        console.log("--------" + userListCards);
-
-        for (let index = 0; index < userListCards.length; index++) {
-            if (userListCards[index] != null) {
-                userCardsHtml.appendChild(userListCards[index]);
-            } else {
-                let nullHtmlElement = document.createElement('div');
-                nullHtmlElement.textContent="NULL"
-
-                userCardsHtml.appendChild(nullHtmlElement);
-            }
+        for (let index = 0; index < userDetailCards.length; index++) {
+            displayUserCard(userDetailCards[index]);
         }
-
     } catch (error) {
         console.error(error);
     }
-    console.log("displayUsers --END");
+
+}
+
+function resetUserCardsWindow() {
+    userCardsHtml.innerHTML = "";
+}
+
+async function displayUserCard(userDetailCard) {
+    try {
+        console.log("displayUserCard userDetailCard");
+        console.log(userDetailCard);
+
+        userCardsHtml.appendChild(userDetailCard);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function createUserDetailCards(userList) {
+    try {
+        let userDetailCards = userList.map((element) => createUserDetailCard(element));
+        console.log("User details cards all:" + userDetailCards);
+        return userDetailCards;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function createUserDetailCard(user) {
@@ -122,9 +137,17 @@ function createUserDetailCard(user) {
     }
 }
 
-async function f1() {
+async function main() {
     userList = await fetchUserList();
-    displayUsers(userList);
+    const userDetailCards = createUserDetailCards(userList);
+    displayUserCards(userDetailCards);
 }
 
-f1();
+main();
+
+function userNotFound() {
+    let div = document.createElement("div");
+    div.textContent = "No results found";
+    resetUserCardsWindow();
+    userCardsHtml.appendChild(div);
+}

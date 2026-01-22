@@ -40,7 +40,7 @@ body {
 
 }
 
-.userCards {
+#userCards {
     grid-area: userCards;
     height: 100hv;
     display:flex;
