@@ -1,16 +1,50 @@
 let userList = null;
 let isUserListFetched = false;
 const userCardsHtml = document.getElementById("userCards");
+const sortByHtml = document.getElementById("sortBy");
 
 const searchBoxHtml = document.getElementById("searchBox");
 searchBoxHtml.addEventListener('input', (event) => { search(event); });
+sortByHtml.addEventListener('change', (event) => { sortUserCards(event) });
+
+function sortUserCards(event) {
+    console.log("sortUserCards" + event.target.value);
+    const sortByValue = event.target.value;
+    let userListSorted;
+    if (sortByValue == "Name") {
+        userListSorted = sortByName();
+        console.log("Users sorted by Name");
+        console.log(userListSorted);
+
+        CreateAndDisplayUsers(userListSorted);
+    } else if (sortByValue == "Company") {
+        userListSorted = sortByCompany();
+        console.log("Users sorted by Company");
+        console.log(userListSorted);
+
+        CreateAndDisplayUsers(userListSorted);
+    }
+
+}
+
+function sortByName() {
+    let userListCopy = userList.slice();
+    userListCopy.sort((a, b) => a.name.localeCompare(b.name));
+    return userListCopy;
+}
+
+function sortByCompany() {
+    let userListCopy = userList.slice();
+    userListCopy.sort((a, b) => a.company.name.localeCompare(b.company.name));
+    return userListCopy;
+}
 
 function search(event) {
     let nameToSearch = event.target.value;
 
     //if searchbox is empty then display all the users
     if (nameToSearch.trim() == "") {
-        main();
+        CreateAndDisplayUsers(userList);
         return null;
     }
 
@@ -90,15 +124,15 @@ function createUserDetailCard(user) {
 
     let userNamDiv = document.createElement('div');
     userNamDiv.classList.add("userName");
-    userNamDiv.textContent = user.name;
+    userNamDiv.textContent = "Name: " + user.name;
 
     let userEmailDiv = document.createElement('div');
     userEmailDiv.classList.add("userEmail");
-    userEmailDiv.textContent = user.email;
+    userEmailDiv.textContent = "Email: " + user.email;
 
     let userCompanyDiv = document.createElement('div');
     userCompanyDiv.classList.add("userCompany");
-    userCompanyDiv.textContent = user.company.name;
+    userCompanyDiv.textContent = "Company Name: " + user.company.name;
 
     cardDiv.appendChild(userNamDiv);
     cardDiv.appendChild(userEmailDiv);
@@ -107,13 +141,6 @@ function createUserDetailCard(user) {
     return cardDiv;
 }
 
-async function main() {
-    userList = await fetchUserList();
-    const userDetailCards = createUserDetailCards(userList);
-    displayUserCards(userDetailCards);
-}
-
-main();
 
 function userNotFound() {
     let div = document.createElement("div");
@@ -121,3 +148,16 @@ function userNotFound() {
     resetUserCardsWindow();
     userCardsHtml.appendChild(div);
 }
+
+function CreateAndDisplayUsers(userList) {
+    const userDetailCards = createUserDetailCards(userList);
+    displayUserCards(userDetailCards);
+}
+
+async function main() {
+    userList = await fetchUserList();
+    CreateAndDisplayUsers(userList);
+}
+
+main();
+
