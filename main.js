@@ -3,6 +3,7 @@ let isUserListFetched = false;
 const userCardsHtml = document.getElementById("userCards");
 const sortByHtml = document.getElementById("sortBy");
 const searchBoxHtml = document.getElementById("searchBox");
+const retryFetchHtml = document.getElementById("retryFetch");
 
 let timer;
 searchBoxHtml.addEventListener('input', (event) => {
@@ -10,6 +11,7 @@ searchBoxHtml.addEventListener('input', (event) => {
     timer = setTimeout(() => search(event), 300);
 });
 sortByHtml.addEventListener('change', (event) => { sortUserCards(event) });
+retryFetchHtml.addEventListener('click', () => { main(); });
 
 function sortUserCards(event) {
     console.log("sortUserCards" + event.target.value);
@@ -98,7 +100,24 @@ async function fetchUserList() {
         }
     } catch (error) {
         console.error("Error occured while fetching user list:" + error);
+        fetchFailed();
+        return null;
     }
+}
+
+function fetchFailed() {
+    showRetryButton();
+    const div = document.createElement("div");
+    div.textContent = "Failed to fetch user details, please press 'retry' button to try again."
+    userCardsHtml.appendChild(div);
+}
+
+function showRetryButton() {
+    retryFetchHtml.classList.remove("notVisible");
+}
+
+function hideRetryButton() {
+    retryFetchHtml.classList.add("notVisible");
 }
 
 function displayUserCards(userDetailCards) {
@@ -160,6 +179,7 @@ function CreateAndDisplayUsers(userList) {
 
 async function main() {
     userList = await fetchUserList();
+    if (userList == null) return;
     CreateAndDisplayUsers(userList);
 }
 

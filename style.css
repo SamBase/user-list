@@ -63,3 +63,7 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
+.notVisible{
+    display:none;
+}
