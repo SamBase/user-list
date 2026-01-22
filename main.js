@@ -2,9 +2,13 @@ let userList = null;
 let isUserListFetched = false;
 const userCardsHtml = document.getElementById("userCards");
 const sortByHtml = document.getElementById("sortBy");
-
 const searchBoxHtml = document.getElementById("searchBox");
-searchBoxHtml.addEventListener('input', (event) => { search(event); });
+
+let timer;
+searchBoxHtml.addEventListener('input', (event) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => search(event), 300);
+});
 sortByHtml.addEventListener('change', (event) => { sortUserCards(event) });
 
 function sortUserCards(event) {
@@ -160,4 +164,3 @@ async function main() {
 }
 
 main();
-
