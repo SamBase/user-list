@@ -29,25 +29,29 @@ body {
     grid-template-rows: 10% 1fr 10%;
 
     grid-template-areas:
-        ". searchBox ."
+        ". searchBox sortBy"
         ". userCards ."
         ". . .";
     height: 100vh;
 }
 
-#searchBox{
+#searchBox {
     grid-area: searchBox;
+}
+
+#sortBy {
+    grid-area: sortBy;
 }
 
 #userCards {
     grid-area: userCards;
     /* height: 100vh; */
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
 
 }
 
-.userCard{
+.userCard {
     border: 0.5em solid black;
     background-image: linear-gradient(to top left, var(--orange-80), var(--orange-65), var(--orange-50));
     border-radius: 1em;
