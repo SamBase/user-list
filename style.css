@@ -37,24 +37,24 @@ body {
 
 #searchBox{
     grid-area: searchBox;
-
 }
 
 #userCards {
     grid-area: userCards;
-    height: 100hv;
+    /* height: 100vh; */
     display:flex;
     flex-wrap: wrap;
 
 }
 
 .userCard{
-    border: 1px solid black;
+    border: 0.5em solid black;
     background-image: linear-gradient(to top left, var(--orange-80), var(--orange-65), var(--orange-50));
     border-radius: 1em;
     word-wrap: break-word;
-    min-width: 5em;
-    max-width: 15em;
+    width: 15em;
+    max-height: 15em;
+    margin: 1em;
     display: flex;
     flex-direction: column;
     justify-content: center;

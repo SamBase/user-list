@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css" />
     <title>User-list</title>
 </head>
+
 <body>
     <input type="text" id="searchBox" name="" placeholder="search by user name...">
+
+    <select name="sortBy" id="sortBy">
+        <option value="Name">Name</option>
+        <option value="Company">Company</option>
+    </select>
+
     <div id="userCards">
     </div>
     <script src="./main.js"></script>
 </body>
+
 </html>
