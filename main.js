@@ -181,6 +181,50 @@ async function main() {
     userList = await fetchUserList();
     if (userList == null) return;
     CreateAndDisplayUsers(userList);
+    let summary = calculateSummaryCard(userList);
+    displaySummary(summary);
 }
 
 main();
+
+//User summaty card
+function calculateSummaryCard(userList) {
+    const userListCopy = userList.slice();
+    let summary = userListCopy.reduce((accumulator, currentValue) => {
+        console.log("accumulator");
+        console.log(accumulator);
+        accumulator.total += 1;
+        accumulator.companyCounts[currentValue.company.name] = (accumulator.companyCounts[currentValue.company.name] || 0) + 1;
+        accumulator.totalNameLength += currentValue.name.length;
+        return accumulator;
+    }, { total: 0, companyCounts: {}, totalNameLength: 0 })
+
+    console.log("uniqueCompanies:");
+    console.log(summary);
+
+    return summary;
+}
+
+function displaySummary(summary){
+    console.log("summary");
+    console.log(summary);
+    
+    const summaryHtml = document.getElementById("summaryCard");
+    const div = document.createElement("div");
+    const cardHeading = document.createElement("h1");
+    const totalUsers = document.createElement("div");
+    const totalCompanies = document.createElement("div");
+    const top3Companies = document.createElement("div");
+    const totalNameLength = document.createElement("div");
+
+    summaryHtml.appendChild(div);
+    div.append(cardHeading,totalUsers,totalCompanies,top3Companies,totalNameLength);
+
+    cardHeading.textContent = "Summary";
+    totalUsers.textContent = "Total users: " + summary.total; 
+    totalCompanies.textContent = "Total companies: " + Object.keys(summary.companyCounts).length;
+    top3Companies.textContent = "Top 3 companies by users: " +Object.entries(summary.companyCounts).sort((a,b)=>a-b).slice(0,3)
+    totalNameLength.textContent = "Total name length: " + summary.totalNameLength; 
+
+}
+//

@@ -30,7 +30,7 @@ body {
 
     grid-template-areas:
         ". searchBox sortBy"
-        ". userCards ."
+        ". userCards summaryCard"
         ". . .";
     height: 100vh;
 }
@@ -41,6 +41,10 @@ body {
 
 #sortBy {
     grid-area: sortBy;
+}
+
+#summaryCard {
+    grid-area: summaryCard;
 }
 
 #userCards {
