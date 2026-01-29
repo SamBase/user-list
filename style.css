@@ -31,7 +31,7 @@ body {
     grid-template-areas:
         ". searchBox sortBy"
         ". userCards summaryCard"
-        ". . .";
+        ". . toggle";
     height: 100vh;
 }
 
@@ -45,6 +45,10 @@ body {
 
 #summaryCard {
     grid-area: summaryCard;
+}
+
+.toggleData {
+    grid-area: toggle;
 }
 
 #userCards {
