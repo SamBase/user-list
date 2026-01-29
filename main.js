@@ -4,6 +4,7 @@ const userCardsHtml = document.getElementById("userCards");
 const sortByHtml = document.getElementById("sortBy");
 const searchBoxHtml = document.getElementById("searchBox");
 const retryFetchHtml = document.getElementById("retryFetch");
+const toggleSummaryCard = document.getElementById("showSummary");
 
 let timer;
 searchBoxHtml.addEventListener('input', (event) => {
@@ -12,6 +13,15 @@ searchBoxHtml.addEventListener('input', (event) => {
 });
 sortByHtml.addEventListener('change', (event) => { sortUserCards(event) });
 retryFetchHtml.addEventListener('click', () => { main(); });
+toggleSummaryCard.addEventListener('change', (event) => {
+    if (event.target.checked) {
+        //show the summary card
+        unhideSummary();
+    } else {
+        //hide summary card
+        hideSummary();
+    }
+});
 
 function sortUserCards(event) {
     console.log("sortUserCards" + event.target.value);
@@ -181,13 +191,15 @@ async function main() {
     userList = await fetchUserList();
     if (userList == null) return;
     CreateAndDisplayUsers(userList);
+
     let summary = calculateSummaryCard(userList);
     displaySummary(summary);
+    hideSummary();
 }
 
 main();
 
-//User summaty card
+//User summary card
 function calculateSummaryCard(userList) {
     const userListCopy = userList.slice();
     let summary = userListCopy.reduce((accumulator, currentValue) => {
@@ -205,10 +217,10 @@ function calculateSummaryCard(userList) {
     return summary;
 }
 
-function displaySummary(summary){
+function displaySummary(summary) {
     console.log("summary");
     console.log(summary);
-    
+
     const summaryHtml = document.getElementById("summaryCard");
     const div = document.createElement("div");
     const cardHeading = document.createElement("h1");
@@ -218,13 +230,23 @@ function displaySummary(summary){
     const totalNameLength = document.createElement("div");
 
     summaryHtml.appendChild(div);
-    div.append(cardHeading,totalUsers,totalCompanies,top3Companies,totalNameLength);
+    div.append(cardHeading, totalUsers, totalCompanies, top3Companies, totalNameLength);
 
     cardHeading.textContent = "Summary";
-    totalUsers.textContent = "Total users: " + summary.total; 
+    totalUsers.textContent = "Total users: " + summary.total;
     totalCompanies.textContent = "Total companies: " + Object.keys(summary.companyCounts).length;
-    top3Companies.textContent = "Top 3 companies by users: " +Object.entries(summary.companyCounts).sort((a,b)=>a-b).slice(0,3)
-    totalNameLength.textContent = "Total name length: " + summary.totalNameLength; 
+    top3Companies.textContent = "Top 3 companies by users: " + Object.entries(summary.companyCounts).sort((a, b) => a - b).slice(0, 3)
+    totalNameLength.textContent = "Total name length: " + summary.totalNameLength;
 
+}
+
+function hideSummary() {
+    const summaryHtml = document.getElementById("summaryCard");
+    summaryHtml.classList.add("notVisible");
+}
+
+function unhideSummary() {
+    const summaryHtml = document.getElementById("summaryCard");
+    summaryHtml.classList.remove("notVisible");
 }
 //
