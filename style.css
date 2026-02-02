@@ -25,7 +25,7 @@ body {
     /* background-image: linear-gradient(to top left, var(--full-background-light), var(--full-background), var(--full-background-dark)); */
     /* background-color: var(--full-background); */
     display: grid;
-    grid-template-columns: 10% 1fr 10%;
+    grid-template-columns: 10% 1fr auto;
     grid-template-rows: 10% 1fr 10%;
 
     grid-template-areas:
