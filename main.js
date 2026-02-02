@@ -5,6 +5,7 @@ const sortByHtml = document.getElementById("sortBy");
 const searchBoxHtml = document.getElementById("searchBox");
 const retryFetchHtml = document.getElementById("retryFetch");
 const toggleSummaryCard = document.getElementById("showSummary");
+const compactCards = document.getElementById("compactCards");
 
 let timer;
 searchBoxHtml.addEventListener('input', (event) => {
@@ -20,6 +21,13 @@ toggleSummaryCard.addEventListener('change', (event) => {
     } else {
         //hide summary card
         hideSummary();
+    }
+});
+compactCards.addEventListener('change', (event) => {
+    if (event.target.checked) {
+        reduceCardInfo();
+    } else {
+        extendCardInfo();
     }
 });
 
@@ -174,6 +182,14 @@ function createUserDetailCard(user) {
     return cardDiv;
 }
 
+function reduceCardInfo() {
+    const emailDivs = document.querySelectorAll(".userEmail");
+    emailDivs.forEach(emailDiv => { emailDiv.classList.add("notVisible") });
+}
+function extendCardInfo() {
+    const emailDivs = document.querySelectorAll(".userEmail");
+    emailDivs.forEach(emailDiv => { emailDiv.classList.remove("notVisible") });
+}
 
 function userNotFound() {
     let div = document.createElement("div");
