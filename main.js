@@ -5,7 +5,7 @@ let isUserListFetched = false;
 const userCardsHtml = document.getElementById("userCards");
 const sortByHtml = document.getElementById("sortBy");
 const searchBoxHtml = document.getElementById("searchBox");
-const retryFetchHtml = document.getElementById("retryFetch");
+export const retryFetchHtml = document.getElementById("retryFetch");
 const toggleSummaryCard = document.getElementById("showSummary");
 const compactCards = document.getElementById("compactCards");
 
@@ -32,6 +32,13 @@ compactCards.addEventListener('change', (event) => {
         extendCardInfo();
     }
 });
+
+export function getIsUserListFetched(){
+    return isUserListFetched;
+}
+export function setIsUserListFetched(value){
+    isUserListFetched = value;
+}
 
 function sortUserCards(event) {
     console.log("sortUserCards" + event.target.value);
@@ -102,13 +109,7 @@ function searchUserName(nameToSearch) {
     }
 }
 
-function showRetryButton() {
-    retryFetchHtml.classList.remove("notVisible");
-}
 
-function hideRetryButton() {
-    retryFetchHtml.classList.add("notVisible");
-}
 
 function displayUserCards(userDetailCards) {
     resetUserCardsWindow();

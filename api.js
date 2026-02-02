@@ -1,11 +1,13 @@
+import {getIsUserListFetched, setIsUserListFetched} from "./main.js";
+
 export default async function fetchUserList() {
-    if (isUserListFetched == true) return userList;
+    if (getIsUserListFetched() == true) return userList;
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
 
         if (response.ok) {
             const jsonResponse = await response.json();
-            isUserListFetched = true;
+            setIsUserListFetched(true);
             console.log("User details fetched succesfully");
             console.log("Total users:" + jsonResponse.length);
             console.log(jsonResponse);
@@ -15,7 +17,9 @@ export default async function fetchUserList() {
             throw new Error("Failed to fetch users!");
         }
     } catch (error) {
-        console.error("Error occured while fetching user list:" + error);
+        console.error("Error occured while fetching user list:");
+        console.error(error);
+        
         fetchFailed();
         return null;
     }
