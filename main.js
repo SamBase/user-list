@@ -1,8 +1,9 @@
 import fetchUserList from "./api.js";
+import {resetUserCardsWindow, displayUserCards} from "./render.js";
 
 let userList = null;
 let isUserListFetched = false;
-const userCardsHtml = document.getElementById("userCards");
+export const userCardsHtml = document.getElementById("userCards");
 const sortByHtml = document.getElementById("sortBy");
 const searchBoxHtml = document.getElementById("searchBox");
 export const retryFetchHtml = document.getElementById("retryFetch");
@@ -107,24 +108,6 @@ function searchUserName(nameToSearch) {
     } else {
         return null;
     }
-}
-
-
-
-function displayUserCards(userDetailCards) {
-    resetUserCardsWindow();
-
-    for (let index = 0; index < userDetailCards.length; index++) {
-        displayUserCard(userDetailCards[index]);
-    }
-}
-
-function resetUserCardsWindow() {
-    userCardsHtml.innerHTML = "";
-}
-
-function displayUserCard(userDetailCard) {
-    userCardsHtml.appendChild(userDetailCard);
 }
 
 function createUserDetailCards(userList) {
