@@ -1,5 +1,11 @@
 import fetchUserList from "./api.js";
-import {resetUserCardsWindow, displayUserCards} from "./render.js";
+import {
+    resetUserCardsWindow
+    , displayUserCards
+    , reduceCardInfo
+    , extendCardInfo
+    , hideSummary
+} from "./render.js";
 
 let userList = null;
 let isUserListFetched = false;
@@ -34,10 +40,10 @@ compactCards.addEventListener('change', (event) => {
     }
 });
 
-export function getIsUserListFetched(){
+export function getIsUserListFetched() {
     return isUserListFetched;
 }
-export function setIsUserListFetched(value){
+export function setIsUserListFetched(value) {
     isUserListFetched = value;
 }
 
@@ -138,14 +144,9 @@ function createUserDetailCard(user) {
     return cardDiv;
 }
 
-function reduceCardInfo() {
-    const emailDivs = document.querySelectorAll(".userEmail");
-    emailDivs.forEach(emailDiv => { emailDiv.classList.add("notVisible") });
-}
-function extendCardInfo() {
-    const emailDivs = document.querySelectorAll(".userEmail");
-    emailDivs.forEach(emailDiv => { emailDiv.classList.remove("notVisible") });
-}
+
+
+
 
 function userNotFound() {
     let div = document.createElement("div");
@@ -212,13 +213,5 @@ function displaySummary(summary) {
 
 }
 
-function hideSummary() {
-    const summaryHtml = document.getElementById("summaryCard");
-    summaryHtml.classList.add("notVisible");
-}
 
-function unhideSummary() {
-    const summaryHtml = document.getElementById("summaryCard");
-    summaryHtml.classList.remove("notVisible");
-}
 //
